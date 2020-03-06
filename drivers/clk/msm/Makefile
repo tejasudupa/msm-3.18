@@ -18,6 +18,11 @@ obj-$(CONFIG_ARCH_MSM8996)	+= clock-mmss-8996.o
 obj-$(CONFIG_ARCH_MSM8996)	+= clock-cpu-8996.o
 obj-$(CONFIG_ARCH_MSMCOBALT)	+= clock-osm.o
 
+# MSM 8976
+obj-$(CONFIG_ARCH_MSM8916)	+= clock-rcgwr.o
+obj-$(CONFIG_ARCH_MSM8916)	+= clock-gcc-8976.o
+obj-$(CONFIG_ARCH_MSM8916)	+= clock-cpu-8976.o
+
 # MSM COBALT
 obj-$(CONFIG_ARCH_MSMCOBALT)	+= clock-gcc-cobalt.o
 obj-$(CONFIG_ARCH_MSMCOBALT)	+= clock-gpu-cobalt.o
