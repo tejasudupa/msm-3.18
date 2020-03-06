@@ -27,6 +27,7 @@ struct alpha_pll_masks {
 	u32 alpha_en_mask;	/* alpha_en bit */
 	u32 output_mask;	/* pllout_* bits */
 	u32 post_div_mask;
+        u32 config_ctl_mask;
 
 	u32 test_ctl_lo_mask;
 	u32 test_ctl_hi_mask;
