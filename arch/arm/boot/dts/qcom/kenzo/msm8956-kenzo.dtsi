@@ -1950,7 +1950,7 @@
 		qcom,pas-id = <9>;
 		qcom,proxy-timeout-ms = <100>;
 		qcom,firmware-name = "venus";
-		linux,contiguous-region = <&venus_mem>;
+		memory-region = <&venus_mem>;
 	};
 
 	qcom,lpass@c200000 {
@@ -1989,7 +1989,7 @@
 		/* GPIO output to lpass */
 		qcom,gpio-force-stop = <&smp2pgpio_ssr_smp2p_2_out 0 0>;
 
-		linux,contiguous-region = <&reloc_mem>;
+		memory-region = <&reloc_mem>;
 	};
 
         spmi_bus: qcom,spmi@200f000 {
@@ -2074,7 +2074,7 @@
 
                 /* GPIO output to wcnss */
 		qcom,gpio-force-stop = <&smp2pgpio_ssr_smp2p_4_out 0 0>;
-		linux,contiguous-region = <&reloc_mem>;
+		memory-region = <&reloc_mem>;
 	};
 
 	dcc: dcc@b3000 {
@@ -2134,7 +2134,7 @@
 
 		/* GPIO output to mss */
 		qcom,gpio-force-stop = <&smp2pgpio_ssr_smp2p_1_out 0 0>;
-		linux,contiguous-region = <&modem_mem>;
+		memory-region = <&modem_mem>;
 	};
 
 	cpu-pmu {
@@ -2562,7 +2562,7 @@
 
 	qcom,adsprpc-mem {
 		compatible = "qcom,msm-adsprpc-mem-region";
-		linux,contiguous-region = <&adsp_mem>;
+		memory-region = <&adsp_mem>;
 	};
 
 	qcom,msm-adsp-loader {
