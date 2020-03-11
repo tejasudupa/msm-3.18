@@ -25,21 +25,21 @@
 			compatible = "qcom,msm-ion-reserve";
 			reg = <8>;
 			qcom,heap-align = <0x1000>;
-			memory-region = <&secure_mem>;
+			linux,contiguous-region = <&secure_mem>;
 			qcom,ion-heap-type = "SECURE_DMA";
 		};
 
 		qcom,ion-heap@27 { /* QSEECOM HEAP */
 			compatible = "qcom,msm-ion-reserve";
 			reg = <27>;
-			memory-region = <&qseecom_mem>;
+			linux,contiguous-region = <&qseecom_mem>;
 			qcom,ion-heap-type = "DMA";
 		};
 
 		qcom,ion-heap@28 { /* AUDIO HEAP */
 			compatible = "qcom,msm-ion-reserve";
 			reg = <28>;
-			memory-region = <&audio_mem>;
+			linux,contiguous-region = <&audio_mem>;
 			qcom,ion-heap-type = "DMA";
 		};
 	};

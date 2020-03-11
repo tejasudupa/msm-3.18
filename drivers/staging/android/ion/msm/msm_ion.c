@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2018, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -475,30 +475,86 @@ static void free_pdata(const struct ion_platform_data *pdata)
 	kfree(pdata);
 }
 
-static void msm_ion_get_heap_dt_data(struct device_node *node,
+static void msm_ion_get_heap_align(struct device_node *node,
+				   struct ion_platform_heap *heap)
+{
+	unsigned int val;
+	int ret = of_property_read_u32(node, "qcom,heap-align", &val);
+	if (!ret) {
+		switch ((int) heap->type) {
+		case ION_HEAP_TYPE_CARVEOUT:
+		{
+			struct ion_co_heap_pdata *extra =
+						heap->extra_data;
+			extra->align = val;
+			break;
+		}
+		default:
+			pr_err("ION-heap %s: Cannot specify alignment for this type of heap\n",
+					heap->name);
+			break;
+		}
+	}
+}
+
+static int msm_ion_get_heap_size(struct device_node *node,
 				 struct ion_platform_heap *heap)
 {
+	unsigned int val;
+	int ret = 0;
+	u32 out_values[2];
 	struct device_node *pnode;
+	ret = of_property_read_u32(node, "qcom,memory-reservation-size", &val);
+	if (!ret)
+		heap->size = val;
 
-	pnode = of_parse_phandle(node, "memory-region", 0);
+	ret = of_property_read_u32_array(node, "qcom,memory-fixed",
+								out_values, 2);
+	if (!ret) {
+		heap->size = out_values[1];
+		goto out;
+	}
+
+	pnode = of_parse_phandle(node, "linux,contiguous-region", 0);
 	if (pnode != NULL) {
-		const __be32 *basep;
+		const u32 *addr;
 		u64 size;
-		u64 base;
 
-		basep = of_get_address(pnode,  0, &size, NULL);
-		if (!basep) {
-			base = cma_get_base(dev_get_cma_area(heap->priv));
-			size = cma_get_size(dev_get_cma_area(heap->priv));
-		} else {
-			base = of_translate_address(pnode, basep);
-			WARN(base == OF_BAD_ADDR, "Failed to parse DT node for heap %s\n",
-					heap->name);
+		addr = of_get_address(pnode, 0, &size, NULL);
+		if (!addr) {
+			of_node_put(pnode);
+			ret = -EINVAL;
+			goto out;
 		}
-		heap->base = base;
-		heap->size = size;
+		heap->size = (u32) size;
+		ret = 0;
 		of_node_put(pnode);
 	}
+
+	ret = 0;
+out:
+	return ret;
+}
+
+static void msm_ion_get_heap_base(struct device_node *node,
+				 struct ion_platform_heap *heap)
+{
+	u32 out_values[2];
+	int ret = 0;
+	struct device_node *pnode;
+
+	ret = of_property_read_u32_array(node, "qcom,memory-fixed",
+							out_values, 2);
+	if (!ret)
+		heap->base = out_values[0];
+
+	pnode = of_parse_phandle(node, "linux,contiguous-region", 0);
+	if (pnode != NULL) {
+		heap->base = cma_get_base(heap->priv);
+		of_node_put(pnode);
+	}
+
+	return;
 }
 
 static struct ion_platform_data *msm_ion_parse_dt(struct platform_device *pdev)
@@ -556,7 +612,12 @@ static struct ion_platform_data *msm_ion_parse_dt(struct platform_device *pdev)
 		if (ret)
 			goto free_heaps;
 
-		msm_ion_get_heap_dt_data(node, &pdata->heaps[idx]);
+		msm_ion_get_heap_base(node, &pdata->heaps[idx]);
+		msm_ion_get_heap_align(node, &pdata->heaps[idx]);
+
+		ret = msm_ion_get_heap_size(node, &pdata->heaps[idx]);
+		if (ret)
+			goto free_heaps;
 
 		++idx;
 	}
