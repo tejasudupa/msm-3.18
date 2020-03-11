@@ -13,7 +13,7 @@
 
 &soc {
 	tlmm_pinmux: pinctrl@1000000 {
-		compatible = "qcom,msm-tlmm-8916";
+		compatible = "qcom,msm8976-pinctrl";
 		reg = <0x1000000 0x300000>;
 		interrupts = <0 208 0>;
 		gpio-controller;
@@ -22,14 +22,42 @@
 		#interrupt-cells = <2>;
 
 		/*General purpose pins*/
-		gp: gp {
+		/*gp: gp {
 			qcom,num-pins = <145>;
 			#qcom,pin-cells = <1>;
 			msm_gpio: msm_gpio {
 				compatible = "qcom,msm-tlmm-gp";
 				num_irqs = <145>;
 			};
-		};
+		};*/
+
+
+		gp: gp {
+				mux {
+					pins = "gpio112","gpio113","gpio114","gpio115";
+					function = "gpio";
+
+				};
+
+				config {
+					pins = "gpio112","gpio113","gpio114","gpio115";
+					num_irqs = <145>;
+				};
+			};
+
+  msm_gpio: msm_gpio {
+				mux {
+					pins = "gpio112","gpio113","gpio114","gpio115";
+					function = "gpio";
+
+				};
+
+				config {
+					pins = "gpio112","gpio113","gpio114","gpio115";
+					num_irqs = <145>;
+				};
+			};
+
 
                 spk-ext-pa {
 			spk_ext_pa_active: lines_on {
@@ -59,7 +87,7 @@
 				};
 			};
 		};
-                
+
                 cdc-reset-line {
 			cdc_reset_line_sus: cdc_reset_line_off {
 				mux {
@@ -158,7 +186,7 @@
 				};
 			};
 		};
- 
+
                 pmx-uartconsole {
 			uart_console_active: uart_console_active {
 				mux {
@@ -206,7 +234,7 @@
                           };
 
                 mclk-line {
-                       mclk_line_act: mclk_line_on {   
+                       mclk_line_act: mclk_line_on {
 			         mux {
 				        /* CLK, DATA */
 				        pins = "gpio116";
@@ -267,7 +295,7 @@
 			            };
 		               };
                           };
-  
+
                 blsp1_uart1_active {
                        hsuart_active: default {
 			         mux {
@@ -279,7 +307,7 @@
 			         config {
 				        pins = "gpio0","gpio1",
                                                "gpio2","gpio3";
-				        drive-strength = <16>; /* 16 MA */ 
+				        drive-strength = <16>; /* 16 MA */
                                         bias-disable;
 			            };
 		               };
@@ -296,7 +324,7 @@
 			         config {
 				        pins = "gpio0","gpio1",
                                                "gpio2","gpio3";
-				        drive-strength = <16>; /* 16 MA */ 
+				        drive-strength = <16>; /* 16 MA */
                                         bias-disable;
 			            };
 		               };
@@ -329,7 +357,7 @@
 				};
 			};
 		};
-   
+
                 usb_c_intn_pin {
                        usbc_int_default: usbc_int_default {
 			         mux {
@@ -339,12 +367,12 @@
 
 			         config {
 				        pins = "gpio101","gpio102";
-				        drive-strength = <2>; /* 2 MA */ 
+				        drive-strength = <2>; /* 2 MA */
                                         bias-pull-up;
 			            };
 		               };
-                          };    
- 
+                          };
+
                 cti_trigout_b0 {
                        trigout_b0: trigout_b0 {
 			         mux {
@@ -354,24 +382,24 @@
 
 			         config {
 				        pins = "gpio22";
-				        drive-strength = <2>; /* 2 MA */ 
+				        drive-strength = <2>; /* 2 MA */
                                         bias-disable;
 			            };
 		               };
-                          }; 
-		/* SDC pin type 
+                          };
+		/* SDC pin type
 		sdc: sdc {
 			/*
 			 * 0-3 for sdc1
 			 * 4-6 for sdc2
 			 * 39-44 for sdc3
-			 
+
 			qcom,num-pins = <7>;
-			
+
 			 * Order of pins:
 			 * SDC1: CLK -> 0, CMD -> 1, DATA -> 2, RCLK -> 3
 			 * SDC2: CLK -> 4, CMD -> 5, DATA -> 6
-			 
+
 			#qcom,pin-cells = <1>;
 		};*/
 
@@ -830,7 +858,7 @@
 				};
 			};
 		};
-                
+
                 pmx_i2c_4 {
 			i2c_4_active: i2c_4_active {
 				/* active state */
@@ -844,8 +872,8 @@
 					drive-strength = <2>;
 					bias-disable = <0>;
 				};
-			};       
-                       
+			};
+
                        i2c_4_sleep: i2c_4_sleep {
 				/* suspended state */
 				mux {
@@ -860,7 +888,7 @@
 				};
 			};
 		};
- 
+
                 pmx_i2c_6 {
 			i2c_6_active: i2c_6_active {
 				/* active state */
@@ -890,7 +918,7 @@
 				};
 			};
 		};
-                
+
                 pmx_i2c_8 {
 			i2c_8_active: i2c_8_active {
 				/* active state */
@@ -934,7 +962,7 @@
 				drive-strength = <2>; /* 2 MA */
 			};
 		};
-  
+
                 cam_sensor_rear_sleep: cam_sensor_rear_sleep {
 			/* RESET, STANDBY */
 			mux {
@@ -954,7 +982,7 @@
 			qcom,pins = <&gp 63>;
 			qcom,num-grp-pins = <1>;
 			label = "cam_sensor_rear_vana";
-			
+
 			cam_sensor_rear_vana: cam_sensor_rear_vana {
 				drive-strength = <2>;
 				bias-disable;
@@ -1170,7 +1198,7 @@
 				};
 			};
 		};
-              
+
                 pmx_ts_int_suspend {
 			ts_int_suspend: ts_int_suspend {
 				mux {
@@ -1212,7 +1240,7 @@
 				};
 			};
 		};
- 
+
                 pmx_ts_release {
 			ts_release: ts_release {
 				mux {
@@ -1534,7 +1562,7 @@
 			};
 		};
 
-		/* CoreSight 
+		/* CoreSight
 		tpiu_seta_1 {
 			qcom,pins = <&gp 8>;
 			qcom,num-grp-pins = <1>;
@@ -2403,7 +2431,7 @@
 					pins = "gpio132";
 					bias-pull-down;
                                         output-high;
-					drive-strength = <8>; 
+					drive-strength = <8>;
 				};
 
                        wsa_spkr_sd_sus: lines_off {
@@ -2415,7 +2443,7 @@
 					pins = "gpio132";
 					bias-disable;
                                         output-low;
-					drive-strength = <2>; 
+					drive-strength = <2>;
 				};
 			};
 		};
@@ -2500,7 +2528,7 @@
 
 				config {
 					pins = "gpio134";
-					drive-strength = <16>; 
+					drive-strength = <16>;
 					bias-pull-up;
 				};
 			};
@@ -2515,7 +2543,7 @@
 
 				config {
 					pins = "gpio134";
-					drive-strength = <16>; 
+					drive-strength = <16>;
 					bias-disable;
 				};
 			};
