@@ -655,7 +655,7 @@
 		};
 
 		pmx_mdss: pmx_mdss {
-			mdss_dsi_active: mdss_dsi_active {
+			mdss_dsi_active: active {
 				mux {
 					function = "gpio";
 				};
@@ -721,6 +721,7 @@
 				};
 			};
                  };
+
                 spi0_suspend {
 			spi0_sleep: spi0_sleep {
 				mux {

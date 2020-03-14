@@ -147,7 +147,7 @@
 				qcom,low-power-mode-factor = <65536>;
 			};
 		};
-                qcom,vidc-iommu-domains {
+               /* qcom,vidc-iommu-domains {
 			qcom,domain-ns {
 				qcom,vidc-domain-phandle = <&venus_domain_ns>;
 				qcom,vidc-buffer-types = <0x7ff>,
@@ -168,7 +168,7 @@
 				qcom,vidc-domain-phandle = <&venus_domain_sec_non_pixel>;
 				qcom,vidc-buffer-types = <0x480>;
 			};
-		};
+		};*/
 
 		/* Bus governor tables */
 		venus-ddr-gov {
