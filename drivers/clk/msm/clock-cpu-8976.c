@@ -142,7 +142,7 @@ static struct pll_clk a72ss_hf_pll = {
 	},
 	.base = &virt_bases[APCS_C1_PLL_BASE],
 	.max_rate = 1843200000,
-	.min_rate = 940800000,
+	.min_rate = 400000000,
 	.c = {
 		.parent = &xo_a_clk.c,
 		.dbg_name = "a72ss_hf_pll",
@@ -185,8 +185,8 @@ static struct pll_clk a53ss_sr_pll = {
 		.vco_val = BVAL(21, 20, 1),
 		.config_ctl_val = 0x00141400,
 	},
-	.min_rate = 652800000,
-	.max_rate = 1478400000,
+	.min_rate = 400000000,
+	.max_rate = 1440000000,
 	.base = &virt_bases[APCS_C0_PLL_BASE],
 	.c =  {
 		.parent = &xo_a_clk.c,
