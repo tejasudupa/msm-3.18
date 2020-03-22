@@ -326,7 +326,7 @@ struct vb2_ops {
 
 	int (*buf_init)(struct vb2_buffer *vb);
 	int (*buf_prepare)(struct vb2_buffer *vb);
-	void (*buf_finish)(struct vb2_buffer *vb);
+	int (*buf_finish)(struct vb2_buffer *vb);
 	void (*buf_cleanup)(struct vb2_buffer *vb);
 
 	int (*start_streaming)(struct vb2_queue *q, unsigned int count);
@@ -395,6 +395,7 @@ struct vb2_queue {
 	unsigned int			io_flags;
 	struct mutex			*lock;
 	struct v4l2_fh			*owner;
+        u32				timestamp_type;
 
 	const struct vb2_ops		*ops;
 	const struct vb2_mem_ops	*mem_ops;

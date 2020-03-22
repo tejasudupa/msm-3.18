@@ -2064,6 +2064,13 @@ struct v4l2_dbg_register {
 	__u64 val;
 } __attribute__ ((packed));
 
+/* VIDIOC_DBG_G_CHIP_IDENT */
+struct v4l2_dbg_chip_ident {
+	struct v4l2_dbg_match match;
+	__u32 ident;       /* chip identifier as specified in <media/v4l2-chip-ident.h> */
+	__u32 revision;    /* chip revision, chip specific */
+} __attribute__ ((packed));
+
 #define V4L2_CHIP_FL_READABLE (1 << 0)
 #define V4L2_CHIP_FL_WRITABLE (1 << 1)
 
@@ -2165,6 +2172,8 @@ struct v4l2_create_buffers {
    You must be root to use these ioctls. Never use these in applications! */
 #define	VIDIOC_DBG_S_REGISTER 	 _IOW('V', 79, struct v4l2_dbg_register)
 #define	VIDIOC_DBG_G_REGISTER 	_IOWR('V', 80, struct v4l2_dbg_register)
+
+#define VIDIOC_DBG_G_CHIP_IDENT _IOWR('V', 81, struct v4l2_dbg_chip_ident)
 
 #define VIDIOC_S_HW_FREQ_SEEK	 _IOW('V', 82, struct v4l2_hw_freq_seek)
 

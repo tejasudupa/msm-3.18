@@ -327,6 +327,7 @@ struct msm_vfe_axi_stream_request_cmd {
 	uint32_t burst_len;
 	/* Flag indicating memory input stream */
 	enum msm_stream_rdi_input_type rdi_input_type;
+	enum msm_stream_memory_input_t memory_input;
 };
 
 struct msm_vfe32_axi_stream_request_cmd {
@@ -647,10 +648,11 @@ enum msm_isp_event_mask_index {
 	ISP_EVENT_MASK_INDEX_BUF_DIVERT			= 6,
 	ISP_EVENT_MASK_INDEX_COMP_STATS_NOTIFY		= 7,
 	ISP_EVENT_MASK_INDEX_MASK_FE_READ_DONE		= 8,
-	ISP_EVENT_MASK_INDEX_BUF_DONE			= 9,
+	ISP_EVENT_MASK_INDEX_HW_FATAL_ERROR		= 9,
 	ISP_EVENT_MASK_INDEX_REG_UPDATE_MISSING		= 10,
 	ISP_EVENT_MASK_INDEX_PING_PONG_MISMATCH		= 11,
 	ISP_EVENT_MASK_INDEX_BUF_FATAL_ERROR		= 12,
+        ISP_EVENT_MASK_INDEX_MAX		        = 13,
 };
 
 
@@ -897,6 +899,10 @@ struct msm_isp_ahb_clk_cfg {
 	uint32_t reserved[2];
 };
 
+struct msm_isp_set_stats_ab {
+	uint64_t stats_ab;
+};
+
 #define V4L2_PIX_FMT_QBGGR8  v4l2_fourcc('Q', 'B', 'G', '8')
 #define V4L2_PIX_FMT_QGBRG8  v4l2_fourcc('Q', 'G', 'B', '8')
 #define V4L2_PIX_FMT_QGRBG8  v4l2_fourcc('Q', 'G', 'R', '8')
@@ -1091,6 +1097,9 @@ enum msm_isp_ioctl_cmd_code {
 
 #define VIDIOC_MSM_ISP_AHB_CLK_CFG \
 	_IOWR('V', MSM_ISP_AHB_CLK_CFG, struct msm_isp_ahb_clk_cfg)
+
+#define VIDIOC_MSM_ISP_SET_STATS_BANDWIDTH \
+	_IOWR('V', BASE_VIDIOC_PRIVATE+23, struct msm_isp_set_stats_ab)
 
 #define VIDIOC_MSM_ISP_BUF_DONE \
 	_IOWR('V', BASE_VIDIOC_PRIVATE+21, struct msm_isp32_event_data)
