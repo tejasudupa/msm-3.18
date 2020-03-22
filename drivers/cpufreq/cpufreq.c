@@ -2615,6 +2615,7 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
 		write_unlock_irqrestore(&cpufreq_driver_lock, flags);
 		return -EEXIST;
 	}
+        printk("cpufreq_driver\n");
 	cpufreq_driver = driver_data;
 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
 
@@ -2626,12 +2627,12 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
 		goto err_null_driver;
 
 	register_hotcpu_notifier(&cpufreq_cpu_notifier);
-
 	get_online_cpus();
-	ret = subsys_interface_register(&cpufreq_interface);
+        printk("get_online_cpus\n");
+	//ret = subsys_interface_register(&cpufreq_interface);
 	put_online_cpus();
-	if (ret)
-		goto err_boost_unreg;
+	//if (ret)
+		//goto err_boost_unreg;
 
 	if (!(cpufreq_driver->flags & CPUFREQ_STICKY)) {
 		int i;
@@ -2657,8 +2658,8 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
 	return 0;
 err_if_unreg:
 	subsys_interface_unregister(&cpufreq_interface);
-err_boost_unreg:
-	remove_boost_sysfs_file();
+//err_boost_unreg:
+//	remove_boost_sysfs_file();
 err_null_driver:
 	unregister_hotcpu_notifier(&cpufreq_cpu_notifier);
 	write_lock_irqsave(&cpufreq_driver_lock, flags);
