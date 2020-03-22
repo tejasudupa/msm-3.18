@@ -11,11 +11,11 @@
  * GNU General Public License for more details.
  */
 
-#include "msm8956-pinctrl-kenzo.dtsi"
+#include "msm8976-pinctrl-kenzo.dtsi"
 #include "msm8976-camera-sensor-mtp-kenzo.dtsi"
 #include "msm8976-mdss-mtp-kenzo.dtsi"
 
-i2c_4 { /* BLSP1 QUP4 */
+&i2c_4 { /* BLSP1 QUP4 */
 	focaltech@38 {
 			compatible = "focaltech,5x06";
 			reg = <0x38>;
@@ -76,7 +76,7 @@ i2c_4 { /* BLSP1 QUP4 */
 		};
 };
 
-i2c_6 {
+&i2c_6 {
 	awinic@45 { /* Breath Light-Driven */
 		compatible = "awinic,aw2013";
 		reg = <0x45>;
@@ -116,11 +116,11 @@ i2c_6 {
 	};
 };
 
-usb_otg {
+&usb_otg {
 	qcom,usbid-switch = <&msm_gpio 17 0>;
 };
 
-soc {
+&soc {
     hall {
 		compatible = "hall-switch";
 		interrupt-parent = <&msm_gpio>;
@@ -212,7 +212,7 @@ soc {
 };
 #endif
 
-spmi_bus {
+&spmi_bus {
 	qcom,pmi8950@3 {
 		qcom,leds@d800 {
 			qcom,fs-curr-ua = <20000>;
@@ -262,7 +262,7 @@ spmi_bus {
 	};
 };
 
-sdhc_1 {
+&sdhc_1 {
 	vdd-supply = <&pm8950_l8>;
 	qcom,vdd-voltage-level = <2900000 2900000>;
 	qcom,vdd-current-level = <200 570000>;
@@ -282,7 +282,7 @@ sdhc_1 {
 	status = "ok";
 };
 
-sdhc_2 {
+&sdhc_2 {
 	vdd-supply = <&pm8950_l11>;
 	qcom,vdd-voltage-level = <2950000 2950000>;
 	qcom,vdd-current-level = <15000 800000>;
@@ -310,7 +310,7 @@ sdhc_2 {
 	status = "ok";
 };
 
-sdhc_3 {
+&sdhc_3 {
 	vdd-supply = <&pm8950_l5>;
 	qcom,vdd-voltage-level = <1800000 1800000>;
 	qcom,vdd-current-level = <200 639000>;
@@ -331,7 +331,7 @@ sdhc_3 {
 
 
 /* CoreSight */
-tpiu {
+&tpiu {
 	pinctrl-names = "sdcard", "trace", "swduart",
 			"swdtrc", "jtag", "spmi";
 	/* NIDnT */
@@ -354,7 +354,7 @@ tpiu {
 		     &qdsd_data0_spmi &qdsd_data3_spmi>;
 };
 
-
+/{
 	mtp_batterydata: qcom,battery-data {
 		qcom,batt-id-range-pct = <20>;
 		#include "batterydata-coslight-4000mah-4400mv-10k.dtsi"

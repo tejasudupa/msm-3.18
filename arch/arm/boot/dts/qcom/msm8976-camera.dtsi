@@ -298,7 +298,7 @@
 		msm_cam_smmu_cb1: msm_cam_smmu_cb1 {
 			compatible = "qcom,qsmmu-cam-cb";
 			iommus = <&apps_iommu 0x400>,
-						<&apps_iommu 0x3400>;
+			<&apps_iommu 0x3400>;
 			label = "vfe";
 			qcom,scratch-buf-support;
 		};

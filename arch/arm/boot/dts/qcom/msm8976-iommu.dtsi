@@ -60,6 +60,7 @@
 		compatible = "qcom,msm-smmu-v2", "qcom,msm-mmu-500";
 		#address-cells = <1>;
 		#size-cells = <1>;
+                #iommu-cells = <1>;
 		ranges;
 		reg = <0x1e00000 0x40000>;
 		reg-names = "iommu_base";
@@ -71,7 +72,6 @@
 			 <&clock_gcc clk_gcc_apss_tcu_clk>;
 		clock-names = "iface_clk", "core_clk";
 		qcom,cb-base-offset = <0x20000>;
-                #iommu-cells = <1>;
 		status = "ok";
 
 		adsp_elf: qcom,iommu-ctx@1e20000 {
